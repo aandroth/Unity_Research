@@ -1,0 +1,8 @@
+{
+  "Host": "http://54.245.57.88:8080",
+  "Port": 8080,
+  "KeepConnected": false,
+  "LogLevel": 0,
+  "TimeoutMs": 1000,
+  "changesMade": true
+}
