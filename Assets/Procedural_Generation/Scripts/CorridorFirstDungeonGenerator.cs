@@ -11,6 +11,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private Vector2Int prevDirection = new Vector2Int();
     private List<Vector2Int> possibleDeadEnds = new List<Vector2Int>();
     private List<GameObject> debugSpheres = new List<GameObject>();
+    HashSet<Vector2Int> floorPositions, corridorPositions;
 
     [SerializeField]
     private Vector2Int corridorLengthConstraints = new Vector2Int() {};
@@ -24,6 +25,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     [SerializeField]
     private RandomColorPicker m_randColorPicker;
+    private List<Color> roomColors = new List<Color>();
 
     protected override void RunProceduralGeneration()
     {
@@ -34,7 +36,8 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     {
         roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
         possibleDeadEnds = new List<Vector2Int>();
-        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        floorPositions = new HashSet<Vector2Int>();
+        corridorPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
         foreach (GameObject sphere in debugSpheres) DestroyImmediate(sphere);
 
@@ -104,22 +107,34 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count * roomPercent);
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
-
+        ClearRoomData();
         foreach (Vector2Int roomPosition in roomsToCreate)
         {
             var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
-            roomsDictionary[roomPosition] = roomFloor;
+            SaveRoomData(roomPosition, roomFloor);
             roomPositions.UnionWith(roomFloor);
         }
 
         return roomPositions;
     }
 
-    private void CreateCorridors(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> potentialRoomPositions)
+    private void ClearRoomData()
+    {
+        roomsDictionary.Clear();
+        roomColors.Clear();
+    }
+
+    private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)
+    {
+        roomsDictionary[roomPosition] = roomFloor;
+        roomColors.Add(m_randColorPicker.GetRandomColor());
+    }
+
+    private void CreateCorridors(HashSet<Vector2Int> floorPositions, 
+                                 HashSet<Vector2Int> potentialRoomPositions)
     {
         var currentPosition = startPosition;
         potentialRoomPositions.Add(currentPosition);
@@ -146,5 +161,6 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
                 debugSpheres.Add(go);
             }
         }
+        corridorPositions = new HashSet<Vector2Int>(floorPositions);
     }
 }
