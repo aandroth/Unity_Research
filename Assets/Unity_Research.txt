@@ -32,3 +32,6 @@ Topics:
     Subscriptions
     Playables: https://www.youtube.com/watch?v=fQzKJO-0dS8
     GPU Instancing: https://www.youtube.com/shorts/ukeVmQbZP_I
+    Creating Proxy for standing on moving platform/ship: https://www.youtube.com/shorts/eFA2LoEvL-gUnity 
+    Unity DOTS (Data Oriented Technology Stack)
+    Unity NoesisGUI
