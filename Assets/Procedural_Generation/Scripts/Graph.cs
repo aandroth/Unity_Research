@@ -1,10 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Graph : MonoBehaviour
+public class Graph
 {
+    List<Vector2Int> graph = new List<Vector2Int>();
+    public Graph(IEnumerable<Vector2Int> vertices)
+    {
+        graph = new List<Vector2Int>(vertices);
+    }
+
+
     // Four-directional offsets (cardinal directions: up, down, left, right)
-    private static readonly List<Vector2Int> FourDirections = new List<Vector2Int>
+    private readonly List<Vector2Int> FourDirections = new List<Vector2Int>
     {
         new Vector2Int(0, 1),   // Up (North)
         new Vector2Int(0, -1),  // Down (South)
@@ -13,7 +20,7 @@ public class Graph : MonoBehaviour
     };
     
     // Eight-directional offsets (cardinal + diagonal directions)
-    private static readonly List<Vector2Int> EightDirections = new List<Vector2Int>
+    private readonly List<Vector2Int> EightDirections = new List<Vector2Int>
     {
         new Vector2Int(0, 1),    // Up (North)
         new Vector2Int(0, -1),   // Down (South)
@@ -30,7 +37,7 @@ public class Graph : MonoBehaviour
     /// </summary>
     /// <param name="cell">The cell position to get neighbors for</param>
     /// <returns>List of Vector2Int representing the four cardinal neighbors</returns>
-    public static List<Vector2Int> GetNeighbors4Directions(Vector2Int cell)
+    public List<Vector2Int> GetNeighbors4Directions(Vector2Int cell)
     {
         return GetNeighbors(cell, FourDirections);
     }
@@ -40,7 +47,7 @@ public class Graph : MonoBehaviour
     /// </summary>
     /// <param name="cell">The cell position to get neighbors for</param>
     /// <returns>List of Vector2Int representing all eight neighbors</returns>
-    public static List<Vector2Int> GetNeighbors8Directions(Vector2Int cell)
+    public List<Vector2Int> GetNeighbors8Directions(Vector2Int cell)
     {
         return GetNeighbors(cell, EightDirections);
     }
@@ -51,14 +58,15 @@ public class Graph : MonoBehaviour
     /// <param name="startPosition">Starting position to check neighbors from</param>
     /// <param name="neighborsOffsetList">List of direction offsets to apply</param>
     /// <returns>List of Vector2Int representing the neighbors</returns>
-    private static List<Vector2Int> GetNeighbors(Vector2Int startPosition, List<Vector2Int> neighborsOffsetList)
+    private List<Vector2Int> GetNeighbors(Vector2Int startPosition, List<Vector2Int> neighborsOffsetList)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
 
         foreach (Vector2Int offset in neighborsOffsetList)
         {
             Vector2Int neighbor = startPosition + offset;
-            neighbors.Add(neighbor);
+            if(graph.Contains(neighbor))
+                neighbors.Add(neighbor);
         }
 
         return neighbors;

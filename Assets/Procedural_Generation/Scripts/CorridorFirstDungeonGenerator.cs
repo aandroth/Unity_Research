@@ -8,6 +8,8 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 {
     // Rooms Dictionary
     Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
+    [SerializeField]
+    Dictionary<Vector2Int, List<GameObject>> roomsPlacedItems = new Dictionary<Vector2Int, List<GameObject>>();
     private Vector2Int prevDirection = new Vector2Int();
     private List<Vector2Int> possibleDeadEnds = new List<Vector2Int>();
     private List<GameObject> debugSpheres = new List<GameObject>();
@@ -25,7 +27,13 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     [SerializeField]
     private RandomColorPicker m_randColorPicker;
+    [SerializeField]
     private List<Color> roomColors = new List<Color>();
+    [SerializeField]
+    private List<RoomData> roomDatas = new List<RoomData>();
+    [SerializeField]
+    private GameObject itemPrefab;
+
 
     protected override void RunProceduralGeneration()
     {
@@ -54,6 +62,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
         ConsolidateRooms();
         ColorRooms();
+        PlaceItemsInRooms();
     }
 
     private void CreateRoomsAtDeadEnd(HashSet<Vector2Int> roomFloors)
@@ -104,6 +113,23 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         }
     }
 
+    private void PlaceItemsInRooms()
+    {
+        foreach(var roomRootPosition in roomsDictionary.Keys)
+        {
+            // Assign room type
+            RoomData roomData = roomDatas[UnityEngine.Random.Range(0, roomDatas.Count)];
+
+            // Get roomData values
+            roomData.GenerateItemQuantities();
+
+            // Call ItemPlacementHelper to place each item in room
+            roomData.CreateItemPlacementHelper(roomsDictionary[roomRootPosition], corridorPositions);
+            List<GameObject> placedItems = roomData.PlaceItems(itemPrefab);
+            roomsPlacedItems[roomRootPosition] = placedItems;
+        }
+    }
+
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
@@ -125,6 +151,20 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     {
         roomsDictionary.Clear();
         roomColors.Clear();
+        ClearPlacedItems();
+    }
+
+
+    public void ClearPlacedItems()
+    {
+        foreach (var room in roomsPlacedItems)
+        {
+            while(room.Value.Count > 0)
+            {
+                DestroyImmediate(room.Value[0].gameObject);
+                room.Value.RemoveAt(0);
+            }
+        }
     }
 
     private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0917ca93819e0d747b2495e31ad23c22, type: 3}
+  m_Name: RoomNeutral
+  m_EditorClassIdentifier: 
+  m_playerRoom: 0
+  m_itemDatas:
+  - minQuantity: 1
+    maxQuantity: 2
+    itemData: {fileID: 11400000, guid: 5dc2977b7dd499842939f2aebb3e7da6, type: 2}
+  - minQuantity: 2
+    maxQuantity: 4
+    itemData: {fileID: 11400000, guid: 90ab9095aaed3d5468f4e47def364350, type: 2}
+  - minQuantity: 2
+    maxQuantity: 4
+    itemData: {fileID: 11400000, guid: d406f349715646447bbebb5c245126ce, type: 2}
+  - minQuantity: 2
+    maxQuantity: 4
+    itemData: {fileID: 11400000, guid: b741757ccc86cb94288476fbd26858e5, type: 2}
+  - minQuantity: 2
+    maxQuantity: 4
+    itemData: {fileID: 11400000, guid: 9f7895d411444b440b164bfd24a4992f, type: 2}

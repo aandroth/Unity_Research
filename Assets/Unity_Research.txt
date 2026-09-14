@@ -1,18 +1,17 @@
 
-Current: Procedural Generation w/ Tilemaps
-    https://www.youtube.com/watch?v=U3Wr-sNnJNk&list=PLcRSafycjWFenI87z7uZHFv6cUG2Tzu9v&index=21
+Current: 
+    Graphics
+        - Shaders: https://medium.com/@pixelcurio/a-lesson-plan-for-learning-shaders-in-unity-ce151d4e9580
+                    https://www.youtube.com/watch?v=2wa6UbtKvMs
 
 
 Topics:
-    Procedural Generation w/ Noise  - https://www.youtube.com/watch?v=ZoqPQ0sFo6A
         Basic
     Procedural Generation:
         Terrain marching: https://iquilezles.org/articles/terrainmarching/
         Dungeon a Day - Where I create a dungeon with the specific details for a monster
                       - It could be the ruleset for that dungeon (spawns x type monsters, has one of four exits, etc)
                       - Integrate into a noise-generated world
-    Graphics
-        - Shaders
     Unity Tools
     Flocking Behavior of https://www.youtube.com/watch?v=6BrZryMz-ac
     Tilemaps
@@ -35,3 +34,22 @@ Topics:
     Creating Proxy for standing on moving platform/ship: https://www.youtube.com/shorts/eFA2LoEvL-gUnity 
     Unity DOTS (Data Oriented Technology Stack)
     Unity NoesisGUI
+    Abstract/Concrete Factory: https://www.youtube.com/watch?v=s1Pa48sxjck
+    Frame Debugger
+
+
+    Scriptable Objects vs Prefabs:
+    I am still confused about this, but the basics seem to be that a scriptable object is a data container 
+    that can be used to store and manage data in a more flexible way than prefabs. Scriptable objects can 
+    be used to create reusable data assets that can be shared across multiple game objects, while prefabs 
+    are more focused on creating reusable game object templates. Scriptable objects are often used for things 
+    like game settings, character stats, and other data that needs to be accessed and modified at runtime, 
+    while prefabs are used for creating instances of game objects with specific components and properties.
+
+
+    DONE:
+    Procedural Generation w/ Tilemaps
+    https://www.youtube.com/watch?v=JOkOih1AKsQ&list=PLcRSafycjWFenI87z7uZHFv6cUG2Tzu9v&index=24
+    12:08
+
+    Procedural Generation w/ Noise  - https://www.youtube.com/watch?v=ZoqPQ0sFo6A
